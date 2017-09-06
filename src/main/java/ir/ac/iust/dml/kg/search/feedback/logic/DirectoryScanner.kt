@@ -41,15 +41,24 @@ class DirectoryScanner {
       pathScan@ PathWalker.getPath(it.path!!, scanRegex, it.depth!!).forEach {
         val absolutePath = it.toAbsolutePath().toString()
         var update = repository.findByPath(absolutePath)
-//        if (update != null) return@pathScan
-        LOGGER.info("I have found a new update at $absolutePath")
         try {
           val info = ConfigReader.readJson(it, UpdateInfo::class)
+          if (info.extractionStart == null || info.extractionEnd == null || info.module == null)
+            return@pathScan
+          if (update != null && update.startTime == info.extractionStart && update.endTime == info.extractionEnd)
+            return@pathScan
+          LOGGER.info("I have found a new update at $absolutePath")
           LOGGER.info("content is $info")
+          update = UpdateTask()
+          update.startTime = info.extractionStart
+          update.endTime = info.extractionEnd
+          update.module = info.module
+          update.path = it.toAbsolutePath().toString()
+          update.runnerId = "1"
+          repository.save(update)
         } catch (th: Throwable) {
           LOGGER.error(th)
         }
-        update = UpdateTask()
       }
     }
     synchronized(semaphore) {

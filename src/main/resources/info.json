@@ -1,7 +1,7 @@
 {
   "extractionStart": 1504712964000,
   "extractionEnd": 1504712964000,
-  "type": "wiki",
+  "module": "wiki",
   "metadata": {
     "anyKey": "anyValue"
   }
