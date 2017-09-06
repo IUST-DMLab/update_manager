@@ -1,0 +1,16 @@
+{
+  "scanAddresses": [
+    {
+      "address": "~/scan/wiki",
+      "depth": 1
+    },
+    {
+      "address": "~/scan/raw",
+      "depth": 2
+    },
+    {
+      "address": "~/scan/table",
+      "depth": 2
+    }
+  ]
+}

@@ -12,5 +12,6 @@ data class UpdateTask(
     @Indexed var module: String? = null,
     @Indexed var startTime: Long? = null,
     @Indexed var endTime: Long? = null,
-    @Indexed var path: String? = null
+    @Indexed var path: String? = null,
+    var runnerId: String? = null
 )

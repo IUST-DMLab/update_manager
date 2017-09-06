@@ -7,5 +7,5 @@ import org.springframework.data.mongodb.repository.Query
 
 interface UpdateTaskRepository : MongoRepository<UpdateTask, ObjectId>, UpdateTaskRepositoryCustom {
   @Query("{ path: {\$eq : ?0} }")
-  fun findByPath(email: String): UpdateTask
+  fun findByPath(path: String): UpdateTask?
 }
