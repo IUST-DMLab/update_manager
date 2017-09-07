@@ -2,7 +2,7 @@ package ir.ac.iust.dml.kg.search.feedback.web.services
 
 import io.swagger.annotations.Api
 import ir.ac.iust.dml.kg.search.feedback.access.entities.UpdateTask
-import ir.ac.iust.dml.kg.search.feedback.logic.UpdateLogic
+import ir.ac.iust.dml.kg.search.feedback.logic.UpdateRestLogic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.web.bind.annotation.*
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*
 @Api(tags = arrayOf("updater"), description = "سرویس‌های بروزرسانی")
 class UpdateRestServices {
 
-  @Autowired lateinit var logic: UpdateLogic
+  @Autowired lateinit var logic: UpdateRestLogic
 
   @RequestMapping(value = "/search", method = arrayOf(RequestMethod.GET))
   @ResponseBody
