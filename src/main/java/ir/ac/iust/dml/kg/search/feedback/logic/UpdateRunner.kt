@@ -74,6 +74,8 @@ class UpdateRunner {
         Module.wiki -> settings.wikiUpdateLinkedPath
         Module.web_table_extractor -> settings.tablesUpdateLinkedPath
         Module.mapper_auto_labeling -> null
+        Module.expert -> null
+        Module.manual -> null
       }
 
   fun run(module: Module) =
@@ -86,5 +88,7 @@ class UpdateRunner {
         Module.wiki -> run("wiki")
         Module.web_table_extractor -> run("table")
         Module.mapper_auto_labeling -> null
+        Module.expert -> null
+        Module.manual -> null
       }
 }
