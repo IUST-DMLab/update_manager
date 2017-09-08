@@ -35,7 +35,7 @@ class UpdateRunner {
     val wikiDefinition = map.getOrDefault("wiki", DefinitionData())
     saveRun(wikiDefinition, "wiki", "-jar", "mapper.jar", "completeDump", "knowledgeStore",
         settings.wikiUpdateLinkedPath.toAbsolutePath().toString())
-    val tableDefinition = map.getOrDefault("tables", DefinitionData())
+    val tableDefinition = map.getOrDefault("table", DefinitionData())
     saveRun(tableDefinition, "table", "-jar", "mapper.jar", "tables", "knowledgeStore",
         settings.tablesUpdateLinkedPath.toAbsolutePath().toString())
     val rawDefinition = map.getOrDefault("raw", DefinitionData())
@@ -62,6 +62,18 @@ class UpdateRunner {
         ran?.identifier
       } catch (th: Throwable) {
         null
+      }
+
+  fun getRunPath(module: Module) =
+      when (module) {
+        Module.raw_mapper_entity_adder,
+        Module.raw_rule_based,
+        Module.raw_distant_supervision_logistic,
+        Module.raw_distant_supervision_deep,
+        Module.raw_dependency_pattern -> settings.rawUpdateLinkedPath
+        Module.wiki -> settings.wikiUpdateLinkedPath
+        Module.web_table_extractor -> settings.tablesUpdateLinkedPath
+        Module.mapper_auto_labeling -> null
       }
 
   fun run(module: Module) =

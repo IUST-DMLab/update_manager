@@ -9,6 +9,7 @@ import org.apache.log4j.Logger
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
+import java.nio.file.Files
 
 @Service
 class DirectoryScanner {
@@ -18,7 +19,7 @@ class DirectoryScanner {
   private val scanRegex = Regex("info\\.json")
   @Autowired lateinit var repository: UpdateTaskRepository
   @Autowired lateinit var settings: UpdateConfigurator
-  lateinit var updateRunner: UpdateRunner
+  @Autowired lateinit var updateRunner: UpdateRunner
 
   @Scheduled(fixedRate = 5000)
   fun reportCurrentTime() {
@@ -44,10 +45,17 @@ class DirectoryScanner {
           update.endTime = info.extractionEnd
           update.module = info.module
           update.path = it.toAbsolutePath().toString()
-          update.runnerId = updateRunner.run(update.module!!)
-          if (update.runnerId != null)
-            repository.save(update)
+          val updatePath = updateRunner.getRunPath(update.module!!) ?: return@forEach
+          if (Files.exists(updatePath)) updatePath.parent.toFile().deleteRecursively()
+          try {
+            Files.createSymbolicLink(it.parent, updatePath)
+          } catch (e: Throwable) {
+            it.parent.toFile().copyRecursively(updatePath.toFile(), true)
+          }
+          update.runnerId = updateRunner.run(update.module!!) ?: return@forEach
+          repository.save(update)
         } catch (th: Throwable) {
+          // Check it out: http://answers.perforce.com/articles/KB/3472/?q=enabling&l=en_US&fs=Search&pn=1
           LOGGER.error(th)
         }
       }
