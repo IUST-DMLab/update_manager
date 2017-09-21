@@ -19,6 +19,7 @@
     <kotlin.version>1.1.4-2</kotlin.version>
   </properties>
   <build>
+    <filename>knowledge-updater</filename>
     <plugins>
       <plugin>
         <groupId>org.jetbrains.kotlin</groupId>
