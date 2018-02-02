@@ -82,7 +82,7 @@ class UpdateRunner {
         Module.mapper_auto_labeling -> null
         Module.expert -> null
         Module.manual -> null
-        Module.similar -> null
+        Module.sameAs -> null
       }
 
   fun run(module: Module) =
@@ -97,6 +97,6 @@ class UpdateRunner {
         Module.mapper_auto_labeling -> null
         Module.expert -> null
         Module.manual -> null
-        Module.similar -> null
+        Module.sameAs -> null
       }
 }
